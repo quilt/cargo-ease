@@ -1,0 +1,26 @@
+[package]
+name = "cargo-ease"
+version = "0.1.0"
+authors = ["Jonny Rhea <jonny.rhea@consensys.net>"]
+license = "Apache-2.0"
+edition = "2018"
+
+[dependencies]
+cargo = "0.30"
+console = "0.6.1"
+dialoguer = "0.1.0"
+quicli = "0.4"
+git2 = "0.7.1"
+tempfile = "3.0.2"
+regex = "1.0.0"
+heck = "0.3.0"
+liquid = "0.19.0"
+walkdir = "2.1.4"
+remove_dir_all = "0.5.1"
+url = "1.7.1"
+structopt = "0.2.15"
+failure = "0.1.5"
+
+[[bin]]
+path = "src/main.rs"
+name = "cargo-ease"
