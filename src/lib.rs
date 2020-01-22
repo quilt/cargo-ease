@@ -1,18 +1,18 @@
 mod authors;
+mod emoji;
 mod git;
 mod template;
-mod emoji;
 
 use crate::git::GitConfig;
 use crate::template::Name;
 use cargo;
 use console::style;
+use dialoguer::Input;
 use failure;
+use quicli::prelude::Error;
 use std::env;
 use std::path::PathBuf;
 use structopt::StructOpt;
-use dialoguer::Input;
-use quicli::prelude::Error;
 
 static EE_TEMPLATE: &str = "https://github.com/jrhea/ease-ee-template.git";
 
@@ -56,17 +56,15 @@ pub fn prompt_for_name() -> Result<String, Error> {
 }
 
 pub fn create(args: Args) -> Result<(), failure::Error> {
-    let name : &Name = &match &args.name {
+    let name: &Name = &match &args.name {
         Some(ref n) => Name::new(n),
-        None => Name::new(&prompt_for_name()?),  //Prompt user
+        None => Name::new(&prompt_for_name()?), //Prompt user
     };
     let branch = args.branch.unwrap_or_else(|| "master".to_string());
     let config = GitConfig::new(EE_TEMPLATE.to_string(), branch.clone())?;
     if let Some(dir) = &create_project_dir(&name) {
         match git::create(dir, config) {
-            Ok(_) => {
-                git::remove_history(dir).unwrap_or(apply_template(name, dir, &branch)?)
-            }
+            Ok(_) => git::remove_history(dir).unwrap_or(apply_template(name, dir, &branch)?),
             Err(e) => failure::bail!(
                 "{} {} {}",
                 emoji::ERROR,
@@ -78,15 +76,13 @@ pub fn create(args: Args) -> Result<(), failure::Error> {
         failure::bail!(
             "{} {}",
             emoji::ERROR,
-            style("Error: directory already exists!")
-                .bold()
-                .red(),
+            style("Error: directory already exists!").bold().red(),
         );
     }
     Ok(())
 }
 
-/// Adapted from: 
+/// Adapted from:
 /// https://github.com/ashleygwilliams/cargo-generate/blob/5a2b7f988c448ccbda4b2d1c5c619125ccefcfaf/src/lib.rs#L110
 fn create_project_dir(name: &Name) -> Option<PathBuf> {
     let dir_name = name.kebab_case();
@@ -109,11 +105,7 @@ fn create_project_dir(name: &Name) -> Option<PathBuf> {
     }
 }
 
-fn apply_template(
-    name: &Name,
-    dir: &PathBuf,
-    branch: &str,
-) -> Result<(), failure::Error> {
+fn apply_template(name: &Name, dir: &PathBuf, branch: &str) -> Result<(), failure::Error> {
     let template = template::substitute(name)?;
     template::walk_dir(dir, template)?;
     git::init(dir, branch)?;
