@@ -1,6 +1,6 @@
 use cargo_ease::create;
-use cargo_ease::Cli;
 use cargo_ease::Args;
+use cargo_ease::Cli;
 use quicli::prelude::*;
 use structopt::StructOpt;
 

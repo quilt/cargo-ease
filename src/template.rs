@@ -2,12 +2,12 @@ use crate::authors;
 use crate::emoji;
 use console::style;
 use failure;
+use heck::{KebabCase, SnakeCase};
 use liquid;
 use quicli::prelude::*;
 use std::fs;
 use std::path::PathBuf;
 use walkdir::{DirEntry, WalkDir};
-use heck::{KebabCase, SnakeCase};
 
 pub struct Name {
     pub user_input: String,
@@ -31,9 +31,7 @@ impl Name {
 
 /// Taken from:
 /// https://github.com/ashleygwilliams/cargo-generate/blob/5a2b7f988c448ccbda4b2d1c5c619125ccefcfaf/src/template.rs#L99
-pub fn substitute(
-    name: &Name,
-) -> Result<liquid::value::Object, failure::Error> {
+pub fn substitute(name: &Name) -> Result<liquid::value::Object, failure::Error> {
     let project_name = name.kebab_case();
 
     let mut template = liquid::value::Object::new();
@@ -70,8 +68,8 @@ pub fn walk_dir(
     }
 
     let engine = liquid::ParserBuilder::new()
-                    .build()
-                    .expect("can't fail due to no partials support");
+        .build()
+        .expect("can't fail due to no partials support");
 
     for entry in WalkDir::new(project_dir) {
         let entry = entry?;
