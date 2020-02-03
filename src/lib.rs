@@ -14,7 +14,7 @@ use std::env;
 use std::path::PathBuf;
 use structopt::StructOpt;
 
-static EE_TEMPLATE: &str = "https://github.com/jrhea/ease-ee-template.git";
+static EE_TEMPLATE: &str = "https://github.com/quilt/ease-template.git";
 
 #[derive(StructOpt)]
 #[structopt(bin_name = "cargo")]
