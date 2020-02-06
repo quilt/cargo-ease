@@ -14,7 +14,7 @@ use std::env;
 use std::path::PathBuf;
 use structopt::StructOpt;
 
-static EE_TEMPLATE: &str = "https://github.com/quilt/ease-template.git";
+static EE_TEMPLATE: &str = "https://github.com/quilt/ease-template.git"; //TODO: Switch to quilt repo
 
 #[derive(StructOpt)]
 #[structopt(bin_name = "cargo")]
@@ -60,7 +60,7 @@ pub fn create(args: Args) -> Result<(), failure::Error> {
         Some(ref n) => Name::new(n),
         None => Name::new(&prompt_for_name()?), //Prompt user
     };
-    let branch = args.branch.unwrap_or_else(|| "master".to_string());
+    let branch = args.branch.unwrap_or_else(|| "master".to_string()); //TODO: Pass in path as arg?
     let config = GitConfig::new(EE_TEMPLATE.to_string(), branch.clone())?;
     if let Some(dir) = &create_project_dir(&name) {
         match git::create(dir, config) {
@@ -85,7 +85,7 @@ pub fn create(args: Args) -> Result<(), failure::Error> {
 /// Adapted from:
 /// https://github.com/ashleygwilliams/cargo-generate/blob/5a2b7f988c448ccbda4b2d1c5c619125ccefcfaf/src/lib.rs#L110
 fn create_project_dir(name: &Name) -> Option<PathBuf> {
-    let dir_name = name.kebab_case();
+    let dir_name = format!("{}{}", "../", name.kebab_case());  //TODO: Pass in path as arg?
     let project_dir = env::current_dir()
         .unwrap_or_else(|_e| ".".into())
         .join(&dir_name);
