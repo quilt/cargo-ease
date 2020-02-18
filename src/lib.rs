@@ -85,7 +85,7 @@ pub fn create(args: Args) -> Result<(), failure::Error> {
 /// Adapted from:
 /// https://github.com/ashleygwilliams/cargo-generate/blob/5a2b7f988c448ccbda4b2d1c5c619125ccefcfaf/src/lib.rs#L110
 fn create_project_dir(name: &Name) -> Option<PathBuf> {
-    let dir_name = format!("{}{}", "../", name.kebab_case());  //TODO: Pass in path as arg?
+    let dir_name = format!("{}",name.kebab_case());  //TODO: Pass in path as arg?
     let project_dir = env::current_dir()
         .unwrap_or_else(|_e| ".".into())
         .join(&dir_name);
