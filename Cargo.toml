@@ -2,6 +2,8 @@
 name = "cargo-ease"
 version = "0.1.0"
 authors = ["Jonny Rhea <jonny.rhea@consensys.net>"]
+documentation = "Cargo subcommand to generate an ETH2 EE project template"
+repository = "https://github.com/quilt/cargo-ease"
 license = "Apache-2.0"
 edition = "2018"
 
