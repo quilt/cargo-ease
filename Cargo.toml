@@ -1,6 +1,6 @@
 [package]
 name = "cargo-ease"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Jonny Rhea <jonny.rhea@consensys.net>"]
 description = "Cargo subcommand to generate an ETH2 EE project template"
 repository = "https://github.com/quilt/cargo-ease"
